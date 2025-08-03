@@ -1,15 +1,14 @@
 import { useContext, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
-
 
 function RoleRedirect() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user && user == null) {
-      return Navigate("/login");
+    if (!user) {
+      navigate('/login');
     } else {
       switch (user.role) {
         case 'student':
@@ -22,11 +21,9 @@ function RoleRedirect() {
           navigate('/admin-dashboard');
           break;
         default:
-          navigate('/login'); // fallback if role is unknown
+          navigate('/login');
       }
     }
-
-
   }, [user, navigate]);
 
   return null;
